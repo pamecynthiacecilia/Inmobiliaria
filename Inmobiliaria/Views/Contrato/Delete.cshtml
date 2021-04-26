@@ -1,0 +1,72 @@
+﻿@model Inmobiliaria.Models.Contrato
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar</h1>
+
+<h3>Seguro Quieres Eliminar el Contrato?</h3>
+<div>
+
+    <hr />
+    <h4>Contrato</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Inicio del Contrato
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+        <dt class="col-sm-2">
+            Fin del Contrato
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaFin)
+        </dd>
+        <dt class="col-sm-2">
+            Nro Contrato
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            Importe mensual
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Importe)
+        </dd>
+        <dt class="col-sm-2">
+            Apellido Inquilino
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InquilinoContrato.Apellido)
+
+        </dd>
+        <dt class="col-sm-2">
+            Nombre Inquilino
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InquilinoContrato.Nombre)
+
+        </dd>
+        <dt class="col-sm-2">
+            Tipo de Inmueble
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InmuebleContrato.Tipo)
+        </dd>
+        <dt class="col-sm-2">
+            Direccion
+        </dt>
+        <dd class="col-sm-10">
+
+            @Html.DisplayFor(model => model.InmuebleContrato.Direccion)
+        </dd>
+
+    </dl>
+    <form asp-action="Delete">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver</a>
+    </form>
+</div>

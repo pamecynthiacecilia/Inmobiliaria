@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Inmobiliaria.Models.Contrato>
+
+@{
+
+    ViewData["Title"] = "Index";
+    List<Contrato> con = ViewData[nameof(Contrato)] as List<Contrato>;
+   
+}
+
+<h1>Contratos</h1>
+
+<p>
+    <a asp-action="Create"><i class="bi bi-journal-plus"></i> Nuevo Contrato</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Fecha Inicio
+            </th>
+            <th>
+               Fecha Fin
+            </th>
+            <th>
+               Nro Contrato
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Importe)
+            </th>
+            <th>
+                Datos Inmueble
+            </th>
+            <th>
+               Datos Inquilino
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in con) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaFin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Importe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InquilinoContrato.Apellido)
+                @Html.DisplayFor(modelItem => item.InquilinoContrato.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InmuebleContrato.Tipo)
+                @Html.DisplayFor(modelItem => item.InmuebleContrato.Direccion)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" title="Detalles"><span> <i class="bi bi-card-list"></i></span></a> &nbsp &nbsp
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><span> <i class="bi bi-pencil"></i></span></a> &nbsp &nbsp
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Eliminar"><span><i class="bi bi-trash"></i></span></a>&nbsp &nbsp
+                <a asp-action="Index" asp-controller="Pago" asp-route-id="@item.Id" title="Lista de Pagos"><span> <i class="bi bi-card-list"></i></span></a>&nbsp &nbsp
+                <a asp-action="Create" asp-controller="Pago" asp-route-id="@item.Id" title="Nuevo Pago"><span> <i class="bi bi-cash"></i></span></a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
