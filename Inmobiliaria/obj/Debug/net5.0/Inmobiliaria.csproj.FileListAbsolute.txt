@@ -152,3 +152,4 @@ C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\V
 C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Usuario\Delete.cshtml.g.cs
 C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Usuario\Details.cshtml.g.cs
 C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Home\Restringido.cshtml.g.cs
+C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Shared\UsuarioRestingido.cshtml.g.cs
