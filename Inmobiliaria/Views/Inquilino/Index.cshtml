@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Inmobiliaria.Models.Inquilino>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inquilinos";
     List<Inquilino> inquilinos = ViewData[nameof(Inquilino)] as List<Inquilino>;
 
 }
@@ -10,7 +10,7 @@
 <br/>
 
 <p>
-    <a asp-action="Create"><i class="bi bi-person-plus"></i> Nuevo Inquilino</a>
+    <a asp-action="Create" style="text-decoration:none"><i class="bi bi-person-plus"></i> Nuevo Inquilino</a>
 </p>
 <table class="table">
     <thead>

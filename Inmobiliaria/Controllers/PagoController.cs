@@ -1,4 +1,5 @@
 ﻿using Inmobiliaria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Inmobiliaria.Controllers
 {
+    [Authorize]
     public class PagoController : Controller
 
     {
@@ -71,6 +73,7 @@ namespace Inmobiliaria.Controllers
         }
 
         // GET: PagoController/Edit/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Edit( int id)
         {
             ///ViewBag.Contratos = repositorioContrato.ObtenerId(idCon);
@@ -97,6 +100,7 @@ namespace Inmobiliaria.Controllers
         }
 
         // GET: PagoController/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
             Pago c = repositorio.ObtenerPorId(id);

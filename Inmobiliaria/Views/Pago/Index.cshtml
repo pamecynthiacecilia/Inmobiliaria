@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Inmobiliaria.Models.Pago>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pagos";
     List<Pago> pagos = ViewData[nameof(Pago)] as List<Pago>;
    
 }
@@ -23,6 +23,7 @@
             <th>
               Fecha Pago
             </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Importe)
             </th>

@@ -5,12 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\propiedades\images.jfif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\fondo\fondo.png" />
+    <None Include="wwwroot\propiedades\casa.jpg" />
+    <None Include="wwwroot\propiedades\departamento.jpg" />
+    <None Include="wwwroot\propiedades\images.jfif" />
+    <None Include="wwwroot\propiedades\oficina.jpg" />
   </ItemGroup>
 
   <ItemGroup>

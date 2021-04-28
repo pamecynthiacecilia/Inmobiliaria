@@ -1,7 +1,7 @@
 ﻿@model Inmobiliaria.Models.Usuario
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Borrar Usuario";
 }
 
 <h1>Eliminar</h1>
@@ -12,7 +12,7 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+         Nro Usuario
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Id)
@@ -35,18 +35,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Clave)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Clave)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Avatar)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Avatar)
-        </dd>
+        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Rol)
         </dt>
@@ -57,7 +46,8 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver</a>
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <input type="submit" value="Volver" class="btn btn-primary"  asp-action="Index" />
+       
     </form>
 </div>

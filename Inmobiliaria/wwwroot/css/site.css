@@ -5,42 +5,53 @@ a.navbar-brand {
   white-space:normal;
   text-align: center;
   word-break: break-all;
+  
+}
+
+li{
+    display: inline-block;
 }
 
 
 /* Provide sufficient contrast against white background */
-form a {
+   a {
     color:blue;
 }
 
     a:hover {
-        color: red;
+        color: black;
     }
 
     a:active {
         color: blue;
     }
 
+
+
+body{
+    background-image:url(../fondo/fondo.png);
+}
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #1a4af0;
     border-color: #1861ac;
+    font-size:18px;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 13px;
+  font-size: 15px;
 }
 @media (min-width: 768px) {
   html {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 

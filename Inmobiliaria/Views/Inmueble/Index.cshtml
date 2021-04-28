@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Inmobiliaria.Models.Inmueble>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inmuebles";
     List<Inmueble> inmuebles = ViewData[nameof(Inmueble)] as List<Inmueble>;
     string dis = "Disponible";
     string nodis = "No disponible";
@@ -10,7 +10,7 @@
 <h1>Lista de Inmuebles</h1>
 
 <p>
-    <a asp-action="Create">Agregar un Nuevo Inmueble</a>
+    <a asp-action="Create"  style="text-decoration:none"><span><i class="bi bi-house-fill"></i></span>Nuevo Inmueble</a>
 </p>
 <table class="table">
     <thead>

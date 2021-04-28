@@ -2,20 +2,20 @@
 @model IEnumerable< Inmobiliaria.Models.Usuario >
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Usuarios";
     List<Usuario>usuarios = ViewData[nameof(Usuario)] as List<Usuario>;
 }
 
 <h1>Lista de Usuarios</h1>
 
 <p>
-    <a asp-action="Create">Crear Nuevo</a>
+    <a asp-action="Create" style="text-decoration:none"><span><i class="bi bi-person-plus-fill"></i></span>Nuevo Usuario</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+               Nro de Usuario
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -58,8 +58,9 @@
                     @Html.DisplayFor(modelItem => item.RolNombre)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><span class="lnr lnr-pencil"></span></a> &nbsp;
-                    <a asp-action="Eliminar" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross"></span></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" title="Detalles"><span> <i class="bi bi-card-list"></i></span></a> &nbsp &nbsp
+                    <a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><span> <i class="bi bi-pencil"></i></span></a> &nbsp &nbsp
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Eliminar"><span><i class="bi bi-trash"></i></span></a>
                 </td>
             </tr>
         }

@@ -1,4 +1,5 @@
 ﻿using Inmobiliaria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Inmobiliaria.Controllers
 {
+    [Authorize]
     public class PropietarioController : Controller
     {
         private readonly IConfiguration configuration;
@@ -61,6 +63,7 @@ namespace Inmobiliaria.Controllers
 
 
         // GET: PropietarioController/Edit/5
+        [Authorize(Policy ="Administrador")]
         public ActionResult Edit(int id)
         {
             var entidad = repositorio.ObtenerPorId(id);
@@ -93,13 +96,11 @@ namespace Inmobiliaria.Controllers
         }
 
         // GET: PropietarioController/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
 
             var propietario = repositorio.Detalles(id);
-            /*if (TempData.ContainsKey("Mensaje")) ;
-            ViewBag.Mensaje = TempData["Mensaje"];
-            ViewBag.Error = TempData["Error"]; */
             return View(propietario);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Inmobiliaria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Inmobiliaria.Controllers
 {
+    [Authorize]
     public class InquilinoController : Controller
     {
         protected readonly IConfiguration conf;
@@ -65,10 +67,7 @@ namespace Inmobiliaria.Controllers
         public ActionResult Delete(int id)
         {
             var inquilino = repositorioInquilino.ObtenerPorId(id);
-            /*if (TempData.ContainsKey("Mensaje"))
-               ;
-           
-                */
+         
             ViewBag.Mensaje = TempData["Mensaje"];
             ViewBag.Error = TempData["Error"];
             return View(inquilino);
@@ -78,6 +77,7 @@ namespace Inmobiliaria.Controllers
         // POST: InquilinoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy ="Administrador")]
         public ActionResult Delete(int id, Inquilino e)
         {
             try
