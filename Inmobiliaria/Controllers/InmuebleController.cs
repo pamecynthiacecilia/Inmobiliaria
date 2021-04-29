@@ -39,6 +39,16 @@ namespace Inmobiliaria.Controllers
             return View(lista);
         }
 
+        public ActionResult InmueblesPorPropietario(int id)
+        {
+            var lista = repositorio.inmueblesPorPropietario(id);
+
+            ViewData[nameof(Inmueble)] = lista;
+
+            return View(lista);
+        }
+
+
         // GET: InmuebleController/Details/5
         public ActionResult Details(int id)
         {

@@ -22,10 +22,53 @@ namespace Inmobiliaria.Models
     }
 
 
-       
-         
-         
-         public List<Inmueble> ObtenerTodos()
+        public List<Inmueble> inmueblesPorPropietario(int id)
+        {
+			var res = new List<Inmueble>();
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string sql = "SELECT i.id,tipo,uso,direccion,cantAmbientes,precio,idPropietario,disponibilidad, p.nombre,p.apellido,p.dni,p.tel FROM Inmuebles i, Propietarios p WHERE i.idPropietario = p.id and (p.id=@id)"; 
+
+		
+				using (SqlCommand command = new SqlCommand(sql, connection))
+				{
+					connection.Open();
+					command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+					var reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						var e = new Inmueble
+						{
+							Id = reader.GetInt32(0),
+							Tipo = reader.GetString(1),
+							Uso = reader.GetString(2),
+							Direccion = reader.GetString(3),
+							CantAmbientes = reader.GetInt32(4),
+							Precio = reader.GetDecimal(5),
+							IdPropietario = reader.GetInt32(6),
+							Disponible = reader.GetInt32(7),
+
+							PropietarioInmueble = new Propietario
+							{
+								Id = reader.GetInt32(6),
+								Nombre = reader.GetString(8),
+								Apellido = reader.GetString(9),
+								Dni = reader.GetString(10),
+								Tel = reader.GetString(11),
+
+							}
+						};
+						res.Add(e);
+					}
+					connection.Close();
+				}
+				return res;
+			}
+
+		}
+
+		public List<Inmueble> ObtenerTodos()
 		{
 			var res = new List<Inmueble>();
 
@@ -56,7 +99,8 @@ namespace Inmobiliaria.Models
                                  Id  = reader.GetInt32(6),
                                 Nombre = reader.GetString(8),
                                 Apellido = reader.GetString(9),
-                            }
+							    
+						  }
 						};
 						res.Add(e);
 					}
