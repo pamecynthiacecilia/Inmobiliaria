@@ -8,9 +8,7 @@ a.navbar-brand {
   
 }
 
-li{
-    display: inline-block;
-}
+ 
 
 
 /* Provide sufficient contrast against white background */
@@ -43,6 +41,9 @@ body{
     border-color: #1861ac;
     font-size:18px;
 }
+
+
+  
 
 /* Sticky footer styles
 -------------------------------------------------- */

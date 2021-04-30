@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Inmobiliaria.Models.Inmueble>
+
+@{
+    ViewData["Title"] = "Disponibles";
+    List<Inmueble> inmuebles = ViewData[nameof(Inmueble)] as List<Inmueble>;
+    string dis = "Disponible";
+    string nodis = "No disponible";
+}
+
+<h1>Inmuebles Disponibles</h1>
+<p>
+    <a asp-action="Index" style="text-decoration:none"><span><i class="bi bi-reply"></i></span>Volver</a>
+</p>
+<table class="table">
+    <thead>
+
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                Ambientes
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                Datos Propietario
+            </th>
+
+            <th>
+                Estado
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in inmuebles)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Uso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantAmbientes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PropietarioInmueble.Nombre)
+                    @Html.DisplayFor(modelItem => item.PropietarioInmueble.Apellido)
+                </td>
+
+
+                <td>
+
+                    @{
+                        if (item.Disponible == 1)
+                        {
+                            @Html.DisplayFor(modelItem => dis)}
+                        else
+                        { @Html.DisplayFor(modelItem => nodis)}
+
+                    }
+
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

@@ -56,7 +56,7 @@
                         <a asp-action="Details" asp-route-id="@item.Id" title="Detalles"><span> <i class="bi bi-card-list"></i></span></a> &nbsp &nbsp
                         <a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><span> <i class="bi bi-pencil"></i></span></a> &nbsp &nbsp
                         <a asp-action="Delete" asp-route-id="@item.Id" title="Eliminar"><span><i class="bi bi-trash"></i></span></a>
-
+                        <a asp-action="InmueblesPorPropietario" asp-controller="Inmueble"asp-route-id="@item.Id" title="Inmuebles del Propietario"><span><i class="bi bi-house-fill"></i> </span></a> &nbsp &nbsp
                     </td>
                 </tr>
             }

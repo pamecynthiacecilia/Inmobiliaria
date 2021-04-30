@@ -64,6 +64,7 @@ namespace Inmobiliaria.Controllers
 
 
         // GET: InquilinoController/Delete/5
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
         {
             var inquilino = repositorioInquilino.ObtenerPorId(id);

@@ -22,7 +22,58 @@ namespace Inmobiliaria.Models
     }
 
 
-        public List<Inmueble> inmueblesPorPropietario(int id)
+
+		
+		 
+	 public List<Inmueble> ObtenerDisponible()
+        {
+            List<Inmueble> inmueble = new List<Inmueble>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"SELECT i.id,tipo,uso,direccion,cantAmbientes,precio,idPropietario,disponibilidad, p.nombre,p.apellido,p.dni,p.tel" +
+                    $" FROM Inmuebles i INNER JOIN Propietarios p ON i.idPropietario = p.id" +
+                    $" WHERE disponibilidad= {1} ";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Inmueble i = new Inmueble
+                        {
+							Id = reader.GetInt32(0),
+							Tipo = reader.GetString(1),
+							Uso = reader.GetString(2),
+							Direccion = reader.GetString(3),
+							CantAmbientes = reader.GetInt32(4),
+							Precio = reader.GetDecimal(5),
+							IdPropietario = reader.GetInt32(6),
+							Disponible = reader.GetInt32(7),
+
+							PropietarioInmueble = new Propietario
+							{
+								Id = reader.GetInt32(6),
+								Nombre = reader.GetString(8),
+								Apellido = reader.GetString(9),
+								Dni = reader.GetString(10),
+								Tel = reader.GetString(11),
+
+							} 
+                        };
+                        inmueble.Add(i);
+                    }
+                    connection.Close();
+                }
+            }
+            return inmueble;
+        }
+
+		 
+		 
+
+
+		public List<Inmueble> inmueblesPorPropietario(int id)
         {
 			var res = new List<Inmueble>();
 

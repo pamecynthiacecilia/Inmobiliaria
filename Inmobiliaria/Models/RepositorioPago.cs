@@ -29,11 +29,13 @@ namespace Inmobiliaria.Models
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = "SELECT p.id,nroPago, fecha,p.importe,idContrato, c.Id FROM Pagos p ,Contratos c Where c.id= p.idContrato";
+				string sql = "SELECT p.id,nroPago, fecha,p.importe,idContrato, c.fechaInicio, " +
+					"c.fechaFin,i.id,i.apellido,i.nombre FROM Pagos p ,Contratos c, Inquilinos i " +
+					"Where (c.idInquilino= i.id) and (c.id= p.idContrato) ";
 
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
-					
+
 					connection.Open();
 					var reader = command.ExecuteReader();
 					while (reader.Read())
@@ -49,8 +51,18 @@ namespace Inmobiliaria.Models
 							ContratoPago = new Contrato
 							{
 								Id = reader.GetInt32(4),
-							
-                            }
+								FechaInicio = reader.GetDateTime(5),
+								FechaFin = reader.GetDateTime(6),
+
+								InquilinoContrato = new Inquilino
+								{
+									Id = reader.GetInt32(7),
+									Apellido = reader.GetString(8),
+									Nombre = reader.GetString(9),
+
+								},
+
+							}
 						};
 						res.Add(e);
 					}
@@ -62,8 +74,7 @@ namespace Inmobiliaria.Models
 
 		}
 
-
-					public int Agregar(Pago pago)
+		public int Agregar(Pago pago)
 					{
 						int res = -1;
 						using (SqlConnection connection = new SqlConnection(connectionString))
@@ -154,7 +165,74 @@ namespace Inmobiliaria.Models
 
 					}
 
-			   public int Editar(Pago e)
+
+
+		public List<Pago>PagosPorContrato(int id)
+
+			{
+				List<Pago> res = new List<Pago>();
+
+				using (SqlConnection connection = new SqlConnection(connectionString))
+
+				{
+				  string sql = "SELECT p.id,nroPago, fecha,p.importe,idContrato, " +
+					"c.fechaInicio,c.fechaFin,i.id,i.apellido,i.nombre " +
+					"FROM Pagos p, Contratos c, Inquilinos i, Inmuebles inm WHERE (p.idContrato= c.id) and (c.idInquilino = i.id ) and (c.idInmueble= inm.id) and (p.idContrato=@id)"; 
+				
+					
+
+
+				using (SqlCommand command = new SqlCommand(sql, connection))
+
+					{
+
+						command.CommandType = CommandType.Text;
+						command.Parameters.AddWithValue("@id", id);
+						connection.Open();
+						var reader = command.ExecuteReader();
+
+						while (reader.Read())
+						{
+
+							var e = new Pago
+							{ 
+							Id = reader.GetInt32(0),
+							NroPago = reader.GetInt32(1),
+							FechaP = reader.GetDateTime(2),
+							Importe = reader.GetDecimal(3),
+							IdContrato = reader.GetInt32(4),
+
+							ContratoPago = new Contrato
+							{
+								Id = reader.GetInt32(4),
+								FechaInicio = reader.GetDateTime(5),
+								FechaFin = reader.GetDateTime(6),
+
+								InquilinoContrato = new Inquilino
+								{
+									Id = reader.GetInt32(7),
+									Apellido = reader.GetString(8),
+									Nombre = reader.GetString(9),
+
+								},
+
+							}
+						};
+						res.Add(e);
+					}
+					connection.Close();
+				}
+
+				return res;
+			}
+
+		}
+
+		
+
+
+
+		public int Editar(Pago e)
 	{
 		int res = -1;
 		using (SqlConnection connection = new SqlConnection(connectionString))

@@ -28,6 +28,7 @@ namespace Inmobiliaria.Controllers
             this.environment = environment;
             this.repositorio = new RepositorioUsuario(configuration);
         }
+
         // GET: Usuarios
         [Authorize(Policy = "Administrador")]
         public ActionResult Index()
@@ -38,7 +39,6 @@ namespace Inmobiliaria.Controllers
         }
 
         // GET: Usuarios/Details/5
-       [Authorize(Policy = "Administrador")]
         public ActionResult Details(int id)
         {
             var e = repositorio.ObtenerPorId(id);
@@ -46,7 +46,7 @@ namespace Inmobiliaria.Controllers
         }
 
         // GET: Usuarios/Create
-       [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Create()
         {
             ViewBag.Roles = Usuario.ObtenerRoles();
@@ -102,8 +102,8 @@ namespace Inmobiliaria.Controllers
             }
         }
 
+
         // GET: Usuarios/Edit/5
-        //[Authorize]
         public ActionResult Perfil()
         {
             ViewData["Title"] = "Mi perfil";
@@ -112,8 +112,9 @@ namespace Inmobiliaria.Controllers
             return View("Edit", u);
         }
 
+
         // GET: Usuarios/Edit/5
-       [Authorize(Policy = "Administrador")]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Edit(int id)
         {
             
@@ -141,7 +142,7 @@ namespace Inmobiliaria.Controllers
                     int res = repositorio.Modificacion(u);
                     return RedirectToAction(nameof(Index));
 
-                }
+            }
               
             catch(Exception ex)
             {
@@ -196,8 +197,8 @@ namespace Inmobiliaria.Controllers
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
+
         // GET: Usuarios/Create
-        
         public ActionResult Foto()
         {
             try
@@ -216,8 +217,8 @@ namespace Inmobiliaria.Controllers
             }
         }
 
+
         // GET: Usuarios/Create
-        // [Authorize]
         public ActionResult Datos()
         {
             try
@@ -236,6 +237,7 @@ namespace Inmobiliaria.Controllers
             }
         }
     
+
         [AllowAnonymous]
         // GET: Usuarios/Login/
         public ActionResult LoginModal()
@@ -245,7 +247,7 @@ namespace Inmobiliaria.Controllers
 
         [AllowAnonymous]
         // GET: Usuarios/Login/
-     public ActionResult Login(string returnUrl)
+       public ActionResult Login(string returnUrl)
         {
             TempData["returnUrl"] = returnUrl;
             return View();

@@ -39,6 +39,16 @@ namespace Inmobiliaria.Controllers
             return View(lista);
         }
 
+        public ActionResult Disponibles()
+        {
+            var lista = repositorio.ObtenerDisponible();
+
+            ViewData[nameof(Inmueble)] = lista;
+
+            return View(lista);
+        }
+
+
         public ActionResult InmueblesPorPropietario(int id)
         {
             var lista = repositorio.inmueblesPorPropietario(id);
@@ -79,7 +89,7 @@ namespace Inmobiliaria.Controllers
 
 
         // GET: InmuebleController/Edit/5
-        [Authorize(Policy = "Administrador")]
+       
         public ActionResult Edit(int id)
         {
           Inmueble e = repositorio.ObtenerPorId(id);
@@ -127,6 +137,7 @@ namespace Inmobiliaria.Controllers
         // POST: InmuebleController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id, Inmueble entidad)
         {
             try

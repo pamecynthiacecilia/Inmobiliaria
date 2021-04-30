@@ -46,8 +46,6 @@ namespace Inmobiliaria.Models
                             IdInmueble = reader.GetInt32(4),
                             IdInquilino = reader.GetInt32(5),
 
-
-
                             InmuebleContrato = new Inmueble
                             {
                                 Id = reader.GetInt32(4),

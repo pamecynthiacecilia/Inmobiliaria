@@ -154,3 +154,5 @@ C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\V
 C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Home\Restringido.cshtml.g.cs
 C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Shared\UsuarioRestingido.cshtml.g.cs
 C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Inmueble\InmueblesPorPropietario.cshtml.g.cs
+C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Pago\Pagos.cshtml.g.cs
+C:\Users\Usuario\source\repos\Inmobiliaria\Inmobiliaria\obj\Debug\net5.0\Razor\Views\Inmueble\Disponibles.cshtml.g.cs

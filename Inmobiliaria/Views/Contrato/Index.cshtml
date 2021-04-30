@@ -63,8 +63,8 @@
                 <a asp-action="Details" asp-route-id="@item.Id" title="Detalles"><span> <i class="bi bi-card-list"></i></span></a> &nbsp &nbsp
                 <a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><span> <i class="bi bi-pencil"></i></span></a> &nbsp &nbsp
                 <a asp-action="Delete" asp-route-id="@item.Id" title="Eliminar"><span><i class="bi bi-trash"></i></span></a>&nbsp &nbsp
-                <a asp-action="Create" asp-controller="Pago" asp-route-id="@item.Id" title="Nuevo Pago"><span> <i class="bi bi-cash"></i></span></a>
-
+                <a asp-action="Create" asp-controller="Pago" asp-route-id="@item.Id" title="Nuevo Pago"><span> <i class="bi bi-cash"></i></span></a>&nbsp &nbsp
+                <a asp-action="Pagos" asp-controller="Pago" asp-route-id="@item.Id" title="Lista de Pagos"><span><i class="bi bi-cash"></i></span></a>
             </td>
         </tr>
 }

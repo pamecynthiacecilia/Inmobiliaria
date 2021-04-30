@@ -38,6 +38,14 @@ namespace Inmobiliaria.Controllers
             return View(lista);
         }
 
+        public ActionResult Pagos(int id)
+        {
+            var lista = repositorio.PagosPorContrato(id);
+            ViewBag.Pago = lista;
+            return View(lista);
+        }
+
+
         // GET: PagoController/Details/5
         public ActionResult Details(int id)
         {
@@ -73,11 +81,9 @@ namespace Inmobiliaria.Controllers
         }
 
         // GET: PagoController/Edit/5
-        [Authorize(Policy = "Administrador")]
+        
         public ActionResult Edit( int id)
         {
-            ///ViewBag.Contratos = repositorioContrato.ObtenerId(idCon);
-             //int  nro =repositorio.ObtenerId(id);
             Pago p= repositorio.ObtenerPorId(id);
             return View(p);
         }
@@ -99,6 +105,7 @@ namespace Inmobiliaria.Controllers
             }
         }
 
+
         // GET: PagoController/Delete/5
         [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id)
@@ -110,6 +117,7 @@ namespace Inmobiliaria.Controllers
         // POST: PagoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id, Pago p)
         {
             try

@@ -122,6 +122,7 @@ namespace Inmobiliaria.Controllers
         // POST: ContratoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Administrador")]
         public ActionResult Delete(int id, Contrato c)
         {
             try

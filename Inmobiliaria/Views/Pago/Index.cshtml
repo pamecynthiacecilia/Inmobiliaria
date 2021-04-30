@@ -9,32 +9,45 @@
 <h1>Listado de Pagos</h1>
 
 <p>
-    <a asp-action="Create"> <i class="bi bi-cash"></i>Nuevo Pago</a> &nbsp &nbsp &nbsp &nbsp <a asp-controller="Contrato" asp-action="Index"><i class="bi bi-reply"></i>Volver</a>
+    <a asp-controller="Contrato" asp-action="Index"><i class="bi bi-reply"></i>Volver</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-              Codigo de Pago
+                Codigo de Pago
             </th>
             <th>
                 Cuota Nro
             </th>
             <th>
-              Fecha Pago
+                Fecha Pago
             </th>
 
             <th>
                 @Html.DisplayNameFor(model => model.Importe)
             </th>
             <th>
-               Contrato Nro
+                Contrato Nro
             </th>
+
+            <th>
+                Inicio Contrato
+            </th>
+            <th>
+                Fin Contrato
+            </th>
+            <th>
+                Datos Inquilino
+            </th>
+           
             <th></th>
         </tr>
     </thead>
+   
     <tbody>
-@foreach (var item in pagos) {
+        @foreach (var item in pagos)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -52,6 +65,17 @@
                 @Html.DisplayFor(modelItem => item.IdContrato)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.ContratoPago.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContratoPago.FechaFin)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ContratoPago.InquilinoContrato.Nombre)
+                @Html.DisplayFor(model => item.ContratoPago.InquilinoContrato.Apellido)
+            </td>
+            
+            <td>
 
                 <a asp-action="Details" asp-route-id="@item.Id" title="Detalles"><span> <i class="bi bi-card-list"></i></span></a> &nbsp &nbsp
                 <a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><span> <i class="bi bi-pencil"></i></span></a> &nbsp &nbsp
@@ -59,6 +83,6 @@
 
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
