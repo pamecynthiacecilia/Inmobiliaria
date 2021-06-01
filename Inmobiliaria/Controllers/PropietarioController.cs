@@ -1,5 +1,6 @@
 ﻿using Inmobiliaria.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -54,17 +55,46 @@ namespace Inmobiliaria.Controllers
 
         // POST: PropietarioController/Create
         [HttpPost]
+
+
         [ValidateAntiForgeryToken]
-           public ActionResult Create(Propietario p)
-           {
-            repositorio.Agregar(p);
-            return RedirectToAction(nameof(Index));
-           }
+        public ActionResult Create(Propietario propietario)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    propietario.Clave = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                        password: propietario.Clave,
+                        salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                        prf: KeyDerivationPrf.HMACSHA1,
+                        iterationCount: 1000,
+                        numBytesRequested: 256 / 8));
+                    repositorio.Agregar(propietario);
+                  //  TempData["Id"] = propietario.Id;
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                    return View(propietario);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                ViewBag.StackTrace = ex.StackTrace;
+                return View(propietario);
+            }
+        }
+
+        /* public ActionResult Create(Propietario p)
+         {
+          repositorio.Agregar(p);
+          return RedirectToAction(nameof(Index));
+         }*/
 
 
 
         // GET: PropietarioController/Edit/5
-            public ActionResult Edit(int id)
+        public ActionResult Edit(int id)
             {
             var entidad = repositorio.ObtenerPorId(id);
 

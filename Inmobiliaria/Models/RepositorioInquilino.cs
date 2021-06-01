@@ -68,7 +68,9 @@ namespace Inmobiliaria.Models
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 //usar interpolacion
-                String sql = $"INSERT INTO Inquilinos ({nameof(Inquilino.Dni)},{nameof(Inquilino.Nombre)},{nameof(Inquilino.Apellido)},{nameof(Inquilino.Tel)},{nameof(Inquilino.Email)},{nameof(Inquilino.LugarDeTrabajo)},{nameof(Inquilino.DniGarante)},{nameof(Inquilino.NombreGarante)},{nameof(Inquilino.ApellidoGarante)},{nameof(Inquilino.TelGarante)},{nameof(Inquilino.EmailGarante)},{nameof(Inquilino.LugarTrabajoGarante)})" +
+                String sql = $"INSERT INTO Inquilinos ({nameof(Inquilino.Dni)},{nameof(Inquilino.Nombre)},{nameof(Inquilino.Apellido)},{nameof(Inquilino.Tel)},{nameof(Inquilino.Email)}," +
+                    $"{nameof(Inquilino.LugarDeTrabajo)},{nameof(Inquilino.DniGarante)},{nameof(Inquilino.NombreGarante)},{nameof(Inquilino.ApellidoGarante)},{nameof(Inquilino.TelGarante)}," +
+                    $"{nameof(Inquilino.EmailGarante)},{nameof(Inquilino.LugarTrabajoGarante)})" +
 
                    "VALUES  (@dni,@nombre, @apellido,@tel,@email,@lugarDeTrabajo,@dniGarante,@nombreGarante, @apellidoGarante,@telGarante,@emailGarante,@lugarTrabajoGarante);" + "SELECT SCOPE_IDENTITY();";
 
@@ -106,7 +108,7 @@ namespace Inmobiliaria.Models
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"SELECT id, dni,nombre, apellido,tel,email,lugarDeTrabajo," +
+                string sql = $"SELECT Id, dni,nombre, apellido,tel,email,lugarDeTrabajo," +
                     $"dniGarante,nombreGarante, apellidoGarante,telGarante,emailGarante," +
                     $"lugarTrabajoGarante FROM Inquilinos i  WHERE i.id=@id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
@@ -147,7 +149,7 @@ namespace Inmobiliaria.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"DELETE FROM Inquilinos WHERE id = {id}";
+                string sql = $"DELETE FROM Inquilinos WHERE Id = {id}";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -170,7 +172,7 @@ namespace Inmobiliaria.Models
             {
                 string sql = $"UPDATE Inquilinos SET dni=@dni,nombre=@nombre,apellido=@apellido,tel=@tel," +
                     $"email=@email,lugarDeTrabajo=@lugarDeTrabajo, dniGarante=@dniGarante, nombreGarante= @nombreGarante," +
-                    $"apellidoGarante=@apellidoGarante,telGarante=@telGarante,lugarTrabajoGarante=@lugarTrabajoGarante WHERE id=@id";
+                    $"apellidoGarante=@apellidoGarante,telGarante=@telGarante,lugarTrabajoGarante=@lugarTrabajoGarante WHERE Id=@id";
 
 
 

@@ -1,12 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\propiedades\images.jfif" />
-  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Data\" />
@@ -17,13 +13,16 @@
     <None Include="wwwroot\fondo\fondo.png" />
     <None Include="wwwroot\propiedades\casa.jpg" />
     <None Include="wwwroot\propiedades\departamento.jpg" />
-    <None Include="wwwroot\propiedades\images.jfif" />
     <None Include="wwwroot\propiedades\oficina.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" />
   </ItemGroup>
 
   <ItemGroup>

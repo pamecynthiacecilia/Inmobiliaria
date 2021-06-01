@@ -43,6 +43,11 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Clave" class="control-label"></label>
+                <input asp-for="Clave" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="GUARDAR CAMBIOS" class="btn btn-primary" />
             </div>
         </form>
@@ -50,7 +55,7 @@
 </div>
 
 <div>
-    <a asp-area="" asp-controller="Home" asp-action="Index">VOLVER</a>
+ <a asp-area="" asp-controller="Home" asp-action="Index">VOLVER</a>
 </div>
 
 

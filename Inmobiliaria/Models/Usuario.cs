@@ -10,7 +10,7 @@ namespace Inmobiliaria.Models
 	{
 		SuperAdministrador = 1,
 		Administrador = 2,
-		Empleado = 3,
+		Propietario = 3,
 	}
 
 	public class Usuario

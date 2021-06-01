@@ -1,10 +1,12 @@
 ﻿using Inmobiliaria.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,13 +19,16 @@ namespace Inmobiliaria.Controllers
         protected readonly IConfiguration conf;
         RepositorioInmueble repositorio;
         RepositorioPropietario repositorioPropietario;
+        private readonly IWebHostEnvironment environment;
 
 
 
-        public InmuebleController(IConfiguration configuration)
+
+        public InmuebleController(IConfiguration configuration, IWebHostEnvironment environment)
         {
             this.conf = configuration;
             repositorio = new RepositorioInmueble(configuration);
+            this.environment = environment;
             repositorioPropietario = new RepositorioPropietario(configuration);
 
 
@@ -33,7 +38,7 @@ namespace Inmobiliaria.Controllers
         public ActionResult Index()
         {
             var lista = repositorio.ObtenerTodos();
-           
+
             ViewData[nameof(Inmueble)] = lista;
 
             return View(lista);
@@ -64,7 +69,7 @@ namespace Inmobiliaria.Controllers
         {
             var entidad = repositorio.ObtenerPorId(id);
             return View(entidad);
-          } 
+        }
 
         // GET: InmuebleController/Create
         public ActionResult Create()
@@ -78,13 +83,29 @@ namespace Inmobiliaria.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Inmueble e)
         {
-          
-                
-                    repositorio.Agregar(e);
-                   
-                    return RedirectToAction(nameof(Index));
-                
+
+            repositorio.Agregar(e);
+            if (e.ImageFile != null)
+            {
+                string wwwPath = environment.WebRootPath;
+                string path = Path.Combine(wwwPath, "propiedades");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                //Path.GetFileName(u.AvatarFile.FileName);//este nombre se puede repetir
+                string fileName = "propiedad_" + e.Id + Path.GetExtension(e.ImageFile.FileName);
+                string pathCompleto = Path.Combine(path, fileName);
+                e.Imagen = Path.Combine("/propiedades", fileName);
+                using (FileStream stream = new FileStream(pathCompleto, FileMode.Create))
+                {
+                    e.ImageFile.CopyTo(stream);
+                }
+
+                repositorio.Editar(e);
             }
+            return RedirectToAction(nameof(Index));
+        }
 
 
 

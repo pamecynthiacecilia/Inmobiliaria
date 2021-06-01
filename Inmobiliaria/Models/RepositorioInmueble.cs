@@ -30,8 +30,8 @@ namespace Inmobiliaria.Models
             List<Inmueble> inmueble = new List<Inmueble>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"SELECT i.id,tipo,uso,direccion,cantAmbientes,precio,idPropietario,disponibilidad, p.nombre,p.apellido,p.dni,p.tel" +
-                    $" FROM Inmuebles i INNER JOIN Propietarios p ON i.idPropietario = p.id" +
+                string sql = $"SELECT i.Id,tipo,uso,direccion,cantAmbientes,precio,PropietarioId,disponible, p.nombre,p.apellido,p.dni,p.tel" +
+                    $" FROM Inmuebles i INNER JOIN Propietarios p ON i.PropietarioId = p.id" +
                     $" WHERE disponibilidad= {1} ";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -48,7 +48,7 @@ namespace Inmobiliaria.Models
 							Direccion = reader.GetString(3),
 							CantAmbientes = reader.GetInt32(4),
 							Precio = reader.GetDecimal(5),
-							IdPropietario = reader.GetInt32(6),
+							PropietarioId = reader.GetInt32(6),
 							Disponible = reader.GetInt32(7),
 
 							PropietarioInmueble = new Propietario
@@ -79,7 +79,7 @@ namespace Inmobiliaria.Models
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = "SELECT i.id,tipo,uso,direccion,cantAmbientes,precio,idPropietario,disponibilidad, p.nombre,p.apellido,p.dni,p.tel FROM Inmuebles i, Propietarios p WHERE i.idPropietario = p.id and (p.id=@id)"; 
+				string sql = "SELECT i.Id,tipo,uso,direccion,cantAmbientes,precio,PropietarioId,disponible, p.nombre,p.apellido,p.dni,p.tel FROM Inmuebles i, Propietarios p WHERE i.PropietarioId = p.Id and (p.Id=@id)"; 
 
 		
 				using (SqlCommand command = new SqlCommand(sql, connection))
@@ -89,7 +89,7 @@ namespace Inmobiliaria.Models
 					var reader = command.ExecuteReader();
 					while (reader.Read())
 					{
-						var e = new Inmueble
+						Inmueble e = new Inmueble
 						{
 							Id = reader.GetInt32(0),
 							Tipo = reader.GetString(1),
@@ -97,7 +97,7 @@ namespace Inmobiliaria.Models
 							Direccion = reader.GetString(3),
 							CantAmbientes = reader.GetInt32(4),
 							Precio = reader.GetDecimal(5),
-							IdPropietario = reader.GetInt32(6),
+							PropietarioId = reader.GetInt32(6),
 							Disponible = reader.GetInt32(7),
 
 							PropietarioInmueble = new Propietario
@@ -125,7 +125,8 @@ namespace Inmobiliaria.Models
 
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = "SELECT i.id,tipo,uso,direccion,cantAmbientes,precio,idPropietario,disponibilidad, p.nombre,p.apellido FROM Inmuebles i, Propietarios p WHERE i.idPropietario = p.id";
+				string sql = "SELECT i.id, tipo, uso, direccion, cantAmbientes, precio, propietarioId, disponible," +
+					" p.nombre,p.apellido FROM Inmuebles i, Propietarios p WHERE i.propietarioId = p.id"; ;
 
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
@@ -134,24 +135,24 @@ namespace Inmobiliaria.Models
 					var reader = command.ExecuteReader();
 					while (reader.Read())
 					{
-						var e = new Inmueble
+						Inmueble e = new Inmueble
 						{
 							Id = reader.GetInt32(0),
-                            Tipo = reader.GetString(1),
-                            Uso = reader.GetString(2),
-                            Direccion=reader.GetString(3),
-                            CantAmbientes = reader.GetInt32(4),
-                            Precio=reader.GetDecimal(5),
-                            IdPropietario = reader.GetInt32(6),
-                            Disponible= reader.GetInt32(7),
+							Tipo = reader.GetString(1),
+							Uso = reader.GetString(2),
+							Direccion = reader.GetString(3),
+							CantAmbientes = reader.GetInt32(4),
+							Precio = reader.GetDecimal(5),
+							PropietarioId = reader.GetInt32(6),
+							Disponible = reader.GetInt32(7),
 
-                          PropietarioInmueble= new Propietario
-                            {
-                                 Id  = reader.GetInt32(6),
-                                Nombre = reader.GetString(8),
-                                Apellido = reader.GetString(9),
-							    
-						  }
+							PropietarioInmueble = new Propietario
+							{
+								Id = reader.GetInt32(6),
+								Nombre = reader.GetString(8),
+								Apellido = reader.GetString(9),
+
+							}
 						};
 						res.Add(e);
 					}
@@ -169,8 +170,8 @@ namespace Inmobiliaria.Models
 			int res = -1;
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"INSERT INTO Inmuebles (tipo,uso,direccion, cantAmbientes, precio,idPropietario,disponibilidad)" +
-					"VALUES (@tipo,@uso,@direccion,@cantAmbientes, @precio, @idPropietario, @disponibilidad);" +
+				string sql = $"INSERT INTO Inmuebles (tipo,uso,direccion, cantAmbientes, precio,propietarioId,disponible,imagen)" +
+					"VALUES (@tipo,@uso,@direccion,@cantAmbientes, @precio, @propietarioId, @disponible,@imagen);" + 
 					"SELECT SCOPE_IDENTITY();";
 
 				using (var command = new SqlCommand(sql, connection))
@@ -178,11 +179,16 @@ namespace Inmobiliaria.Models
 
 					command.Parameters.AddWithValue("@tipo", inmueble.Tipo);
 					command.Parameters.AddWithValue("@uso", inmueble.Uso);
-					command.Parameters.AddWithValue("@direccion", inmueble.Direccion);
+					command.Parameters.AddWithValue("@direccion", inmueble.Direccion); 
 					command.Parameters.AddWithValue("@cantAmbientes", inmueble.CantAmbientes);
 					command.Parameters.AddWithValue("@precio", inmueble.Precio);
-					command.Parameters.AddWithValue("@idPropietario", inmueble.IdPropietario);
-					command.Parameters.AddWithValue("@disponibilidad", inmueble.Disponible);
+					command.Parameters.AddWithValue("@propietarioId", inmueble.PropietarioId);
+					command.Parameters.AddWithValue("@disponible", inmueble.Disponible);
+					if (String.IsNullOrEmpty(inmueble.Imagen))
+						command.Parameters.AddWithValue("@imagen", DBNull.Value);
+					else
+						command.Parameters.AddWithValue("@imagen", inmueble.Imagen);
+					
 					connection.Open();
 
 					res = Convert.ToInt32(command.ExecuteScalar());
@@ -199,8 +205,8 @@ namespace Inmobiliaria.Models
 			Inmueble e = null;
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"SELECT i.id,tipo,uso,direccion, cantAmbientes, precio,idPropietario,disponibilidad, p.Nombre, p.Apellido" +
-					$" FROM Inmuebles i INNER JOIN Propietarios p ON i.idPropietario = p.id" +
+				string sql = $"SELECT i.id,tipo,uso,direccion, cantAmbientes, precio,propietarioId,disponible, p.Nombre, p.Apellido" +
+					$" FROM Inmuebles i INNER JOIN Propietarios p ON i.propietarioId = p.id" +
 					$" WHERE i.id=@id";
 
 
@@ -221,7 +227,7 @@ namespace Inmobiliaria.Models
 							CantAmbientes = reader.GetInt32(4),
 						
 							Precio = reader.GetDecimal(5),
-							IdPropietario = reader.GetInt32(6),
+							PropietarioId = reader.GetInt32(6),
 							Disponible = reader.GetInt32(7),
 
 							PropietarioInmueble = new Propietario
@@ -244,7 +250,8 @@ namespace Inmobiliaria.Models
 			int res = -1;
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = "UPDATE Inmuebles SET direccion=@direccion, cantAmbientes=@cantAmbientes, tipo=@tipo, uso=@uso, precio=@precio, idPropietario=@idPropietario,disponibilidad=@disponibilidad " +
+				string sql = "UPDATE Inmuebles SET direccion=@direccion, cantAmbientes=@cantAmbientes, tipo=@tipo, uso=@uso, precio=@precio, " +
+					"propietarioId=@propietarioId,disponible=@disponible , imagen=@imagen " +
 					"WHERE id = @id";
 
 				using (SqlCommand command = new SqlCommand(sql, connection))
@@ -256,8 +263,9 @@ namespace Inmobiliaria.Models
 					command.Parameters.AddWithValue("@tipo", e.Tipo);
 					command.Parameters.AddWithValue("@uso", e.Uso);
 					command.Parameters.AddWithValue("@precio", e.Precio);
-					command.Parameters.AddWithValue("@idPropietario", e.IdPropietario);
-					command.Parameters.AddWithValue("@disponibilidad", e.Disponible);
+					command.Parameters.AddWithValue("@propietarioId", e.PropietarioId);
+					command.Parameters.AddWithValue("@disponible", e.Disponible);
+					command.Parameters.AddWithValue("@imagen", e.Imagen);
 
 					connection.Open();
 					res = command.ExecuteNonQuery();
@@ -276,7 +284,7 @@ namespace Inmobiliaria.Models
 			int res = -1;
 			using (SqlConnection connection = new SqlConnection(connectionString))
 			{
-				string sql = $"DELETE FROM Inmuebles WHERE id = {id}";
+				string sql = $"DELETE FROM Inmuebles WHERE Id = {id}";
 				using (SqlCommand command = new SqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
