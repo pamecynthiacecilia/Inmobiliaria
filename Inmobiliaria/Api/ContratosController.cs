@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Inmobiliaria.Api
+namespace Inmobiliaria.Controllers
 {
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -30,35 +31,50 @@ namespace Inmobiliaria.Api
 
 
         // GET: api/<ContratosController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("inmueblesConContrato")]
+        public async Task<ActionResult> InmueblesConContrato()
         {
-            return new string[] { "value1", "value2" };
+
+            try
+            {
+
+                var usuario = User.Identity.Name;
+                var contratosVigentes = contexto.Contratos
+
+              .Include(x => x.InquilinoContrato)
+              .Include(x => x.InmuebleContrato)
+              .Where(c => c.InmuebleContrato.PropietarioInmueble.Email == usuario).ToList();
+                // .ThenInclude(x => x.PropietarioInmueble)
+                //.Select(x => new{ x.InmuebleContrato.Direccion, x.InmuebleContrato.Imagen }).ToList();
+
+                return Ok(contratosVigentes);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
-        // GET api/<ContratosController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/<controller>/5
+        [HttpGet("obtenerPorId/{id}")]
+        public async Task<IActionResult> ObtenerPorId(int id)
         {
-            return "value";
+            try
+            {
+                var usuario = User.Identity.Name;
+                var contratoPorId = contexto.Contratos
+                .Include(x => x.InquilinoContrato)
+                .Include(x => x.InmuebleContrato)
+                 .Where(c => c.InmuebleContrato.PropietarioInmueble.Email == usuario)
+                 .Single(e => e.Id == id);
+                return Ok(contratoPorId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
-        // POST api/<ContratosController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ContratosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ContratosController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-    }
+    }   
 }

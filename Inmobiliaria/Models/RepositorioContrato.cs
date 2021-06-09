@@ -28,7 +28,7 @@ namespace Inmobiliaria.Models
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = "SELECT c.id,fechaInicio,fechaFin,importe,idInquilino,idInmueble,i.apellido,i.nombre,inm.tipo,inm.direccion FROM Contratos c,Inmuebles inm,Inquilinos i WHERE (c.idInmueble = inm.id)AND(c.idInquilino = i.id)";
+                string sql = "SELECT c.id,fechaInicio,fechaFin,importe,inquilinoId,inmuebleId,i.apellido,i.nombre,inm.tipo,inm.direccion FROM Contratos c,Inmuebles inm,Inquilinos i WHERE (c.inmuebleId = inm.id)AND(c.inquilinoId = i.id)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -42,9 +42,9 @@ namespace Inmobiliaria.Models
                             Id = reader.GetInt32(0),
                             FechaInicio = reader.GetDateTime(1),
                             FechaFin = reader.GetDateTime(2),
-                            Importe = reader.GetDecimal(3),
-                            IdInmueble = reader.GetInt32(4),
-                            IdInquilino = reader.GetInt32(5),
+                            Importe = reader.GetFloat(3),
+                            InmuebleId = reader.GetInt32(4),
+                            InquilinoId = reader.GetInt32(5),
 
                             InmuebleContrato = new Inmueble
                             {
@@ -74,8 +74,8 @@ namespace Inmobiliaria.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"INSERT INTO Contratos (fechaInicio,fechaFin,importe,idInmueble,idInquilino)" +
-                    "VALUES (@fechaInicio,@fechaFin,@importe, @idInmueble, @idInquilino);" +
+                string sql = $"INSERT INTO Contratos (fechaInicio,fechaFin,importe,inmuebleId,inquilinoId)" +
+                    "VALUES (@fechaInicio,@fechaFin,@importe, @inmuebleId, @inquilinoId);" +
                     "SELECT SCOPE_IDENTITY();";
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -83,8 +83,8 @@ namespace Inmobiliaria.Models
                     command.Parameters.AddWithValue("@fechaInicio", c.FechaInicio);
                     command.Parameters.AddWithValue("@fechaFin", c.FechaFin);
                     command.Parameters.AddWithValue("@importe", c.Importe);
-                    command.Parameters.AddWithValue("@idInmueble", c.IdInmueble);
-                    command.Parameters.AddWithValue("@idInquilino", c.IdInquilino);
+                    command.Parameters.AddWithValue("@inmuebleId", c.InmuebleId);
+                    command.Parameters.AddWithValue("@inquilinoId", c.InquilinoId);
 
                     connection.Open();
                     res = Convert.ToInt32(command.ExecuteScalar());
@@ -103,8 +103,8 @@ namespace Inmobiliaria.Models
             Contrato e = null;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = "SELECT c.id,fechaInicio,fechaFin,importe,idInmueble,idInquilino,inm.tipo,inm.direccion,i.apellido,i.nombre" +
-                    " FROM Contratos c, Inquilinos i, Inmuebles inm WHERE ((c.idInmueble = inm.id) and (c.idInquilino = i.id) and (c.id=@id));";
+                string sql = "SELECT c.id,fechaInicio,fechaFin,importe,inmuebleId,inquilinoId,inm.tipo,inm.direccion,i.apellido,i.nombre" +
+                    " FROM Contratos c, Inquilinos i, Inmuebles inm WHERE ((c.inmuebleId = inm.id) and (c.inquilinoId = i.id) and (c.id=@id));";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -119,9 +119,9 @@ namespace Inmobiliaria.Models
                             Id = reader.GetInt32(0),
                             FechaInicio = reader.GetDateTime(1),
                             FechaFin = reader.GetDateTime(2),
-                            Importe = reader.GetDecimal(3),
-                            IdInmueble = reader.GetInt32(4),
-                            IdInquilino = reader.GetInt32(5),
+                            Importe = reader.GetFloat(3),
+                            InmuebleId = reader.GetInt32(4),
+                            InquilinoId = reader.GetInt32(5),
 
 
                             InmuebleContrato = new Inmueble
@@ -153,7 +153,7 @@ namespace Inmobiliaria.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = "UPDATE Contratos SET fechaInicio= @fechaInicio, fechaFin= @fechaFin, importe= @importe, idInmueble= @idInmueble, idInquilino=@idInquilino " +
+                string sql = "UPDATE Contratos SET fechaInicio= @fechaInicio, fechaFin= @fechaFin, importe= @importe, inmuebleId= @idInmueble, inquilinoId=@idInquilino " +
                     "WHERE id = @id";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
@@ -163,9 +163,9 @@ namespace Inmobiliaria.Models
                     command.Parameters.AddWithValue("@fechaInicio", e.FechaInicio);
                     command.Parameters.AddWithValue("@fechaFin", e.FechaFin);
                     command.Parameters.AddWithValue("@importe", e.Importe);
-                    command.Parameters.AddWithValue("@idInmueble", e.IdInmueble);
-                    command.Parameters.AddWithValue("@idInquilino", e.IdInquilino);
-
+                    command.Parameters.AddWithValue("@idInmueble", e.InmuebleId);
+                    command.Parameters.AddWithValue("@idInquilino", e.InquilinoId);
+                    
 
 
                     connection.Open();

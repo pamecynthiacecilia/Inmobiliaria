@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label  class="control-label">Datos de Inquilino</label>
-                <select class="form-control" name="IdInquilino">
+                <select class="form-control" name="InquilinoId">
                     <!--<option value="vacio">  </option>-->
                     @foreach (var item in (IList<Inquilino>)ViewBag.Inquilinos)
                     {
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Datos de Inmueble</label>
-                <select class="form-control" name="IdInmueble">
+                <select class="form-control" name="InmuebleId">
                     <!--<option value="vacio">  </option>-->
                     @foreach (var item in (IList<Inmueble>)ViewBag.Inmuebles)
                     {

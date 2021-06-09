@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 
 
-namespace Inmobiliaria.Api
+namespace Inmobiliaria.Controllers
 {
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

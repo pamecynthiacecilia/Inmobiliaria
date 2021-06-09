@@ -48,15 +48,7 @@ namespace Inmobiliaria.Controllers
             {
                 return BadRequest(ex);
             }
-            /*contexto.Contratos.Include(x => x.Inquilino).Include(x => x.Inmueble).ThenInclude(x => x.Duenio)
-                    .Where(c => c.Inmueble.Duenio.Email....);*/
-            /*var res = contexto.Propietarios.Select(x=> new { x.Nombre, x.Apellido, x.Email })
-                .SingleOrDefault(x=>x.Email == usuario);*/
-            /*contexto.Inmuebles
-               .Include(x => x.Duenio)
-               .Where(x => x.Duenio.Nombre == "")//.ToList() => lista de inmuebles
-               .Select(x => x.Duenio)
-               .ToList();//lista de propietarios*/
+        
         }
 
         // GET api/<controller>/5
@@ -173,9 +165,9 @@ namespace Inmobiliaria.Controllers
             }
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("editar")]
-        public async Task<IActionResult> Editar([FromForm]Propietario entidad)
+        // PUT api/<controller>
+        [HttpPut("editar/{id}")]
+        public async Task<IActionResult> Editar(int id, Propietario entidad)
         {
             try
             {
@@ -206,6 +198,38 @@ namespace Inmobiliaria.Controllers
         }
 
 
+        // PUT api/<controller>
+        [HttpPut("editar")]
+        public async Task<IActionResult> Editar([FromBody] Propietario entidad)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    var usuario = User.Identity.Name;
+                    Propietario usuarioActual = contexto.Propietarios.SingleOrDefault(x => x.Email == usuario);
+
+                    if (entidad.Dni != "" && entidad.Dni != null) { usuarioActual.Dni = entidad.Dni; }
+                    if (entidad.Nombre != "" && entidad.Nombre != null) { usuarioActual.Nombre = entidad.Nombre; }
+                    if (entidad.Apellido != "" && entidad.Apellido != null) { usuarioActual.Apellido = entidad.Apellido; }
+                    if (entidad.Tel != "" && entidad.Tel != null) { usuarioActual.Tel = entidad.Tel; }
+                    if (entidad.Email != "" && entidad.Email != null) { usuarioActual.Email = entidad.Email; }
+                    if (entidad.Clave != "" && entidad.Clave != null) { usuarioActual.Clave = entidad.Clave; }
+
+
+                    contexto.Propietarios.Update(usuarioActual);
+                    contexto.SaveChanges();
+                    return Ok(usuarioActual);
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -228,6 +252,17 @@ namespace Inmobiliaria.Controllers
                 return BadRequest(ex);
             }
         }
+
+
+        /*GET: /salir
+        [Route("salir", Name = "logout")]
+        public async Task<ActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction();
+        }*/
+
 
         // GET: api/<controller>
         [HttpGet("test")]
