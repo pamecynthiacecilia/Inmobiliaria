@@ -58,10 +58,73 @@ namespace Inmobiliaria.Controllers
             }
         }
 
-   
+
+
+        [HttpGet("obtenerPorId/{id}")]
+        public async Task<IActionResult> ObtenerPorId(int id)
+        {
+            try
+            {
+                var usuario = User.Identity.Name;
+                return Ok(contexto.Inmuebles.Include(e => e.PropietarioInmueble).Where(e => e.PropietarioInmueble.Email == usuario).Single(e => e.Id == id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
+        //Me sirve para modificar todos los campos
+        [HttpPut("modificarDisponible")]
+        public async Task<IActionResult> ModificarDisponible(int id, [FromBody] Inmueble entidad)
+        {
+            try
+            {
+                var usuario = User.Identity.Name;
+                id = entidad.Id;
+
+
+                var control = contexto.Inmuebles.Include(i => i.PropietarioInmueble.Email)
+                    .Where(x => x.Id == id && x.PropietarioInmueble.Email == usuario);
+
+
+                if (ModelState.IsValid && control != null)
+                {
+
+                    if (entidad.Disponible == 1)
+                    {
+                        entidad.Disponible = 2;
+                        // contexto.Attach(entidad);
+                        // contexto.Entry(entidad).Property("disponible").IsModified== true;
+                        contexto.Inmuebles
+                        .Update(entidad).Property("Disponible");
+
+                    }
+
+                    else
+                    {
+                        entidad.Disponible = 1;
+                        contexto.Inmuebles
+                        .Update(entidad).Property("Disponible");
+                    }
+
+                    contexto.SaveChanges();
+
+                }
+                return Ok(entidad);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
+
         // PUT api/<controller>
 
-       [HttpPut]
+        [HttpPut]
         public async Task<IActionResult> Put(Inmueble inmueble)
         {
             try
